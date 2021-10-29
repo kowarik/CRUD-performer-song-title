@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Lab2DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Performer">
+    <Key>
+      <PropertyRef Name="IdPerformer" />
+    </Key>
+    <Property Name="IdPerformer" Type="Int32" Nullable="false" />
+    <Property Name="NamePerformer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NumberOfSongs" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Songs" Relationship="Self.FK__Songs__IdPerform__276EDEB3" FromRole="Performers" ToRole="Songs" />
+  </EntityType>
+  <EntityType Name="Song">
+    <Key>
+      <PropertyRef Name="IdSong" />
+    </Key>
+    <Property Name="IdSong" Type="Int32" Nullable="false" />
+    <Property Name="IdPerformer" Type="Int32" Nullable="false" />
+    <Property Name="IdSongTitle" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Performer" Relationship="Self.FK__Songs__IdPerform__276EDEB3" FromRole="Songs" ToRole="Performers" />
+    <NavigationProperty Name="SongTitle" Relationship="Self.FK__Songs__IdSongTit__286302EC" FromRole="Songs" ToRole="SongTitles" />
+  </EntityType>
+  <EntityType Name="SongTitle">
+    <Key>
+      <PropertyRef Name="IdSongTitle" />
+    </Key>
+    <Property Name="IdSongTitle" Type="Int32" Nullable="false" />
+    <Property Name="IdSong" Type="Int32" Nullable="false" />
+    <Property Name="SongTitle1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Songs" Relationship="Self.FK__Songs__IdSongTit__286302EC" FromRole="SongTitles" ToRole="Songs" />
+  </EntityType>
+  <Association Name="FK__Songs__IdPerform__276EDEB3">
+    <End Role="Performers" Type="Self.Performer" Multiplicity="1" />
+    <End Role="Songs" Type="Self.Song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Performers">
+        <PropertyRef Name="IdPerformer" />
+      </Principal>
+      <Dependent Role="Songs">
+        <PropertyRef Name="IdPerformer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Songs__IdSongTit__286302EC">
+    <End Role="SongTitles" Type="Self.SongTitle" Multiplicity="1" />
+    <End Role="Songs" Type="Self.Song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SongTitles">
+        <PropertyRef Name="IdSongTitle" />
+      </Principal>
+      <Dependent Role="Songs">
+        <PropertyRef Name="IdSongTitle" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Lab2DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Performers" EntityType="Self.Performer" />
+    <EntitySet Name="Songs" EntityType="Self.Song" />
+    <EntitySet Name="SongTitles" EntityType="Self.SongTitle" />
+    <AssociationSet Name="FK__Songs__IdPerform__276EDEB3" Association="Self.FK__Songs__IdPerform__276EDEB3">
+      <End Role="Performers" EntitySet="Performers" />
+      <End Role="Songs" EntitySet="Songs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Songs__IdSongTit__286302EC" Association="Self.FK__Songs__IdSongTit__286302EC">
+      <End Role="SongTitles" EntitySet="SongTitles" />
+      <End Role="Songs" EntitySet="Songs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

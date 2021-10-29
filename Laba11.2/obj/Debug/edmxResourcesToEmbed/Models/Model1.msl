@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище Lab2DBModelContainer" CdmEntityContainer="Lab2DBEntities">
+    <EntitySetMapping Name="Performers">
+      <EntityTypeMapping TypeName="Lab2DBModel.Performer">
+        <MappingFragment StoreEntitySet="Performers">
+          <ScalarProperty Name="IdPerformer" ColumnName="IdPerformer" />
+          <ScalarProperty Name="NamePerformer" ColumnName="NamePerformer" />
+          <ScalarProperty Name="NumberOfSongs" ColumnName="NumberOfSongs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Songs">
+      <EntityTypeMapping TypeName="Lab2DBModel.Song">
+        <MappingFragment StoreEntitySet="Songs">
+          <ScalarProperty Name="IdSong" ColumnName="IdSong" />
+          <ScalarProperty Name="IdPerformer" ColumnName="IdPerformer" />
+          <ScalarProperty Name="IdSongTitle" ColumnName="IdSongTitle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SongTitles">
+      <EntityTypeMapping TypeName="Lab2DBModel.SongTitle">
+        <MappingFragment StoreEntitySet="SongTitles">
+          <ScalarProperty Name="IdSongTitle" ColumnName="IdSongTitle" />
+          <ScalarProperty Name="IdSong" ColumnName="IdSong" />
+          <ScalarProperty Name="SongTitle1" ColumnName="SongTitle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

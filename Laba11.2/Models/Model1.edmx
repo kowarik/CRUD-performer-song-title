@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Lab2DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Performers">
+          <Key>
+            <PropertyRef Name="IdPerformer" />
+          </Key>
+          <Property Name="IdPerformer" Type="int" Nullable="false" />
+          <Property Name="NamePerformer" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NumberOfSongs" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Songs">
+          <Key>
+            <PropertyRef Name="IdSong" />
+          </Key>
+          <Property Name="IdSong" Type="int" Nullable="false" />
+          <Property Name="IdPerformer" Type="int" Nullable="false" />
+          <Property Name="IdSongTitle" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SongTitles">
+          <Key>
+            <PropertyRef Name="IdSongTitle" />
+          </Key>
+          <Property Name="IdSongTitle" Type="int" Nullable="false" />
+          <Property Name="IdSong" Type="int" Nullable="false" />
+          <Property Name="SongTitle" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Songs__IdPerform__276EDEB3">
+          <End Role="Performers" Type="Self.Performers" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Songs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performers">
+              <PropertyRef Name="IdPerformer" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="IdPerformer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Songs__IdSongTit__286302EC">
+          <End Role="SongTitles" Type="Self.SongTitles" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Songs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SongTitles">
+              <PropertyRef Name="IdSongTitle" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="IdSongTitle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Lab2DBModelContainer">
+          <EntitySet Name="Performers" EntityType="Self.Performers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Songs" EntityType="Self.Songs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SongTitles" EntityType="Self.SongTitles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Songs__IdPerform__276EDEB3" Association="Self.FK__Songs__IdPerform__276EDEB3">
+            <End Role="Performers" EntitySet="Performers" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Songs__IdSongTit__286302EC" Association="Self.FK__Songs__IdSongTit__286302EC">
+            <End Role="SongTitles" EntitySet="SongTitles" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Lab2DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Performer">
+          <Key>
+            <PropertyRef Name="IdPerformer" />
+          </Key>
+          <Property Name="IdPerformer" Type="Int32" Nullable="false" />
+          <Property Name="NamePerformer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumberOfSongs" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Songs" Relationship="Self.FK__Songs__IdPerform__276EDEB3" FromRole="Performers" ToRole="Songs" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="IdSong" />
+          </Key>
+          <Property Name="IdSong" Type="Int32" Nullable="false" />
+          <Property Name="IdPerformer" Type="Int32" Nullable="false" />
+          <Property Name="IdSongTitle" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Performer" Relationship="Self.FK__Songs__IdPerform__276EDEB3" FromRole="Songs" ToRole="Performers" />
+          <NavigationProperty Name="SongTitle" Relationship="Self.FK__Songs__IdSongTit__286302EC" FromRole="Songs" ToRole="SongTitles" />
+        </EntityType>
+        <EntityType Name="SongTitle">
+          <Key>
+            <PropertyRef Name="IdSongTitle" />
+          </Key>
+          <Property Name="IdSongTitle" Type="Int32" Nullable="false" />
+          <Property Name="IdSong" Type="Int32" Nullable="false" />
+          <Property Name="SongTitle1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Songs" Relationship="Self.FK__Songs__IdSongTit__286302EC" FromRole="SongTitles" ToRole="Songs" />
+        </EntityType>
+        <Association Name="FK__Songs__IdPerform__276EDEB3">
+          <End Role="Performers" Type="Self.Performer" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performers">
+              <PropertyRef Name="IdPerformer" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="IdPerformer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Songs__IdSongTit__286302EC">
+          <End Role="SongTitles" Type="Self.SongTitle" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Song" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SongTitles">
+              <PropertyRef Name="IdSongTitle" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="IdSongTitle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Lab2DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Performers" EntityType="Self.Performer" />
+          <EntitySet Name="Songs" EntityType="Self.Song" />
+          <EntitySet Name="SongTitles" EntityType="Self.SongTitle" />
+          <AssociationSet Name="FK__Songs__IdPerform__276EDEB3" Association="Self.FK__Songs__IdPerform__276EDEB3">
+            <End Role="Performers" EntitySet="Performers" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Songs__IdSongTit__286302EC" Association="Self.FK__Songs__IdSongTit__286302EC">
+            <End Role="SongTitles" EntitySet="SongTitles" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Lab2DBModelContainer" CdmEntityContainer="Lab2DBEntities">
+          <EntitySetMapping Name="Performers">
+            <EntityTypeMapping TypeName="Lab2DBModel.Performer">
+              <MappingFragment StoreEntitySet="Performers">
+                <ScalarProperty Name="IdPerformer" ColumnName="IdPerformer" />
+                <ScalarProperty Name="NamePerformer" ColumnName="NamePerformer" />
+                <ScalarProperty Name="NumberOfSongs" ColumnName="NumberOfSongs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="Lab2DBModel.Song">
+              <MappingFragment StoreEntitySet="Songs">
+                <ScalarProperty Name="IdSong" ColumnName="IdSong" />
+                <ScalarProperty Name="IdPerformer" ColumnName="IdPerformer" />
+                <ScalarProperty Name="IdSongTitle" ColumnName="IdSongTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SongTitles">
+            <EntityTypeMapping TypeName="Lab2DBModel.SongTitle">
+              <MappingFragment StoreEntitySet="SongTitles">
+                <ScalarProperty Name="IdSongTitle" ColumnName="IdSongTitle" />
+                <ScalarProperty Name="IdSong" ColumnName="IdSong" />
+                <ScalarProperty Name="SongTitle1" ColumnName="SongTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="7eec14f2aebf40288dc553179724da6f" Name="Diagram1">
+        <EntityTypeShape EntityType="Lab2DBModel.Performer" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lab2DBModel.Song" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lab2DBModel.SongTitle" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="Lab2DBModel.FK__Songs__IdPerform__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="Lab2DBModel.FK__Songs__IdSongTit__286302EC" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
